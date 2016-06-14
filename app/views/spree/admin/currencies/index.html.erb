@@ -1,0 +1,54 @@
+<% content_for :page_title do %>
+  <%= plural_resource_name(Spree::Currency) %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <%= button_link_to Spree.t(:apply_to_all_products), new_object_url, { :class => "btn-danger", :icon => 'retweet', :id => 'admin_apply_currency', data: {confirm: 'Are you sure apply exchange rate to all products? This will take a while for processing.'} }  %>
+  <%#= button_link_to Spree.t(:new_currency), new_object_url, { :class => "btn-success", :icon => 'add', :id => 'admin_new_currency' } %>
+<% end if can? :create, Spree::Currency %>
+
+<p><b>NOTE:</b> Default currency's exchange rate has to be always 1.0</p>
+
+<table class="table" id='listing_currencies' data-hook>
+  <thead>
+    <tr data-hook="tax_header">
+      <th><%= Spree.t(:name) %></th>
+      <th><%= Spree.t(:exchange_rate) %></th>
+      <th><%= Spree.t(:applied) %></th>
+      <th class="actions"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @currencies.each do |currency| %>
+      <tr id="<%= spree_dom_id currency %>" data-hook="currency_row">
+        <td><%= currency.name %> <% if currency.name == Spree::Config['currency'] %><span class="label label-success">Default</span><% end %></td>
+        <td><%= currency.exchange_rate %></td>
+        <td>
+          <% if currency.rate_applied %>
+            <span class="label label-success">YES</span>
+          <% else %>
+            <span class="label label-danger">NO</span>
+          <% end %>
+        </td>
+        <td class="actions actions-2 text-right">
+          <%= link_to_edit(currency, :no_text => true) if can? :edit, currency %>
+          <%= link_to_delete(currency, :no_text => true) if (can? :delete, currency) && currency.name != Spree::Config['currency'] %>
+        </td>
+      </tr>
+    <% end %>
+
+    <% @undefined_currencies.each do |currency| %>
+      <tr data-hook="currency_row">
+        <td><%= currency.iso_code %> <% if currency.iso_code == Spree::Config['currency'] %><span class="label label-success">Default</span><% end %></td>
+        <td><span class="label label-danger">Undefined</span></td>
+        <td>---</td>
+        <td class="actions actions-2 text-right">
+          <%= link_to spree.new_admin_currency_path(create: currency.iso_code), class: 'btn btn-primary btn-sm icon-link with-tip action-edit no-text' do  %>
+            <span class="icon icon-edit"></span>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

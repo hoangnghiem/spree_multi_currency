@@ -16,3 +16,7 @@ en:
     variant_prices_search_placeholder: Search for SKU or variant name...
     notice_messages:
       prices_saved: Prices successfully saved
+    new_currency: New Currency
+    exchange_rate: Exchange Rate
+    apply_to_all_products: Apply Exchange Rate To All Products
+    applied: Applied To Products

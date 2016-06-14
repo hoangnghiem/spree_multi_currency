@@ -1,0 +1,17 @@
+<% content_for :page_title do %>
+  <%= Spree.t(:new_currency) %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <%= link_to_with_icon 'arrow-left', Spree.t(:back_to_resource_list, resource: Spree::Currency.model_name.human), admin_currencies_path, class: 'btn btn-default' %>
+<% end %>
+
+<%= render :partial => 'spree/admin/shared/error_messages', :locals => { :target => @currencies } %>
+
+<%= form_for [:admin, @currency] do |f| %>
+  <fieldset>
+    <%= render :partial => 'form', :locals => { :f => f } %>
+    <%= render :partial => 'spree/admin/shared/new_resource_links' %>
+  </fieldset>
+<% end %>
+

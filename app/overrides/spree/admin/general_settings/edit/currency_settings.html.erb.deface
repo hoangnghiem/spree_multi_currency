@@ -30,5 +30,7 @@
         <p class="help-block"><%= Spree.t('show_currency_selector.long_html') %></p>
       </div>
     </div>
+    <p><b>NOTE:</b> Newly added currency exchange rate need to be updated to showing to users. Click link below to update exchange rate:</p>
+    <p><%= link_to 'Edit Currency Exchange Rate', spree.admin_currencies_path, class: 'btn btn-success' %></p>
   </div>
 </div>

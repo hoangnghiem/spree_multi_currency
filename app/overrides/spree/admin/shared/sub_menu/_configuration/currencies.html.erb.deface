@@ -1,0 +1,3 @@
+<!-- insert_bottom 'ul[data-hook="admin_configurations_sidebar_menu"]' -->
+<%= configurations_sidebar_menu_item('Currencies', spree.admin_currencies_path) if can? :manage, Spree::Config %>
+
