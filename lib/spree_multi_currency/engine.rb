@@ -13,6 +13,7 @@ module SpreeMultiCurrency
         end
       end
       ApplicationController.send :include, Spree::CurrencyHelpers
+      Spree::Api::BaseController.send :include, Spree::CurrencyHelpers
     end
 
     config.to_prepare(&method(:activate).to_proc)
