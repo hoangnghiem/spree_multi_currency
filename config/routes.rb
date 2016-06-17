@@ -5,6 +5,9 @@ Spree::Core::Engine.add_routes do
     resources :products do
       resources :prices, only: [:index, :create]
     end
-    resources :currencies
+    resources :currencies do
+      post :apply_all, on: :collection
+      post :apply, on: :member
+    end
   end
 end

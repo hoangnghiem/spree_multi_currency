@@ -5,6 +5,10 @@ module Spree
       # Make sure that we update the current order, so the currency change is reflected.
       current_order.update_attributes!(currency: @currency.iso_code) if current_order
       session[:currency] = params[:currency] if Spree::Config[:allow_currency_change]
+
+      # empty cart on change currency 
+      current_order.empty! if current_order
+
       respond_to do |format|
         format.json { render json: !@currency.nil? }
         format.html do
