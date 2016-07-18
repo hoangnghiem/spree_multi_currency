@@ -25,6 +25,11 @@ Run
 bundle && bundle exec rails g spree_multi_currency:install
 ```
 
+Generate default currency (required)
+```
+bundle exec rake spree_multi_currency:generate_default_currency
+```
+
 ---
 
 ## Contributing
