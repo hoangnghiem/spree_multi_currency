@@ -15,6 +15,7 @@
       <th><%= Spree.t(:name) %></th>
       <th><%= Spree.t(:exchange_rate) %></th>
       <th><%= Spree.t(:applied) %></th>
+      <th>Zone</th>
       <th class="actions"></th>
     </tr>
   </thead>
@@ -30,6 +31,7 @@
             <span class="label label-danger">NO</span>
           <% end %>
         </td>
+        <td><%= currency.try(:zone).try(:name) %></td>
         <td class="actions actions-2 text-right">
           <%= link_to_edit(currency, :no_text => true) if can? :edit, currency %>
           <%= link_to_delete(currency, :no_text => true) if (can? :delete, currency) && currency.name != Spree::Config['currency'] %>
@@ -44,6 +46,7 @@
       <tr data-hook="currency_row">
         <td><%= currency.iso_code %> <% if currency.iso_code == Spree::Config['currency'] %><span class="label label-success">Default</span><% end %></td>
         <td><span class="label label-danger">Undefined</span></td>
+        <td>---</td>
         <td>---</td>
         <td class="actions actions-2 text-right">
           <%= link_to spree.new_admin_currency_path(create: currency.iso_code), class: 'btn btn-primary btn-sm icon-link with-tip action-edit no-text' do  %>

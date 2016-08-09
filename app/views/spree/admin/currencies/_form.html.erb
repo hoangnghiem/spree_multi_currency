@@ -8,5 +8,12 @@
     <%= f.label :exchange_rate, Spree.t(:exchange_rate) %>
     <%= f.text_field :exchange_rate, :class => 'form-control' %>
   </div>
+
+  <%= f.field_container :zone, class: ['form-group'] do %>
+    <%= f.label :zone, Spree.t(:zone) %>
+    <%= f.select :zone_id, Spree::Zone.all.to_a.collect{|l|[l.name.humanize, l.id]}, {include_blank: true}, {class: 'select2', "data-placeholder" => 'Select Zone to apply'} %>
+    <%= f.error_message_on :zone_id %>
+  <% end %>
+  
 </div>
 

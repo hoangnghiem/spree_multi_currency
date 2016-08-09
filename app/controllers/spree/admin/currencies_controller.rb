@@ -13,7 +13,7 @@ module Spree
 
       def new
         if params[:create].present?
-          new_currency = Spree::Currency.create!(name: params[:create])
+          new_currency = Spree::Currency.find_or_create_by(name: params[:create])
           redirect_to edit_admin_currency_path(new_currency)
         else
           super
