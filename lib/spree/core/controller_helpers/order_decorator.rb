@@ -1,4 +1,5 @@
 Spree::Core::ControllerHelpers::Order.class_eval do
+
   def current_currency
     # ensure session currency is supported
     #
@@ -8,4 +9,5 @@ Spree::Core::ControllerHelpers::Order.class_eval do
       Spree::Config[:currency]
     end
   end
+
 end
