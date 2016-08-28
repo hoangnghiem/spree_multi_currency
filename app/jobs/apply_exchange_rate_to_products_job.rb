@@ -33,9 +33,12 @@ class ApplyExchangeRateToProductsJob < ActiveJob::Base
               base_price = bov.prices.create(currency: Spree::Config['currency'], amount: 0.0)
             end
 
-            exchanged_price = base_price.price * currency.exchange_rate * base_spree_currency.exchange_rate
-            exchanged_price_amount = Spree::Money.new(exchanged_price, currency: currency.name)
+            exchanged_price = base_price.price
+            if bov.price_modifier_type == 'flat_rate'
+              exchanged_price = base_price.price * currency.exchange_rate * base_spree_currency.exchange_rate
+            end
 
+            exchanged_price_amount = Spree::Money.new(exchanged_price, currency: currency.name)
             price = bov.price_in(currency.name)
             price.price = exchanged_price_amount.money
             price.save!
