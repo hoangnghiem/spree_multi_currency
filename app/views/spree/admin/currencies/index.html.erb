@@ -2,11 +2,6 @@
   <%= plural_resource_name(Spree::Currency) %>
 <% end %>
 
-<% content_for :page_actions do %>
-  <%= button_link_to Spree.t(:apply_to_all_products), new_object_url, { :class => "btn-success", :icon => 'refresh', :id => 'admin_apply_currency', data: {confirm: 'Are you sure apply exchange rate to all products? This will take a while for processing.'} }  %>
-  <%#= button_link_to Spree.t(:new_currency), new_object_url, { :class => "btn-success", :icon => 'add', :id => 'admin_new_currency' } %>
-<% end if can? :create, Spree::Currency %>
-
 <p><b>NOTE:</b> Default currency's exchange rate has to be always 1.0</p>
 
 <table class="table" id='listing_currencies' data-hook>
