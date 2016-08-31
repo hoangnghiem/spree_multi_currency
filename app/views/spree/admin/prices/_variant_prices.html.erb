@@ -6,7 +6,7 @@
 	  	<h3 class="panel-title">
 	  		<span class="sku"><%= variant.sku %></span>
 
-	  		<span class="text-muted pull-right">
+	  		<span class="<%= 'text-muted' unless variant.is_master? %> pull-right">
 	  			<%= variant.is_master? ? Spree.t(:master) : variant.options_text.blank? ? Spree.t(:variant) : variant.options_text %>
 	  		</span>
 	  	</h3>
