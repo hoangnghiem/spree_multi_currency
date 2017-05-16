@@ -13,6 +13,9 @@ class ApplyExchangeRateToProductsJob < ActiveJob::Base
           base_price = variant.price_in(Spree::Config['currency'])
           if base_price.price
             exchanged_price = base_price.price * currency.exchange_rate * base_spree_currency.exchange_rate
+            if currency.rounding
+              exchanged_price = exchanged_price.to_i.to_f
+            end
             exchanged_price_amount = Spree::Money.new(exchanged_price, currency: currency.name)
 
             price = variant.price_in(currency.name)

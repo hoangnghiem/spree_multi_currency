@@ -14,6 +14,11 @@
     <%= f.select :zone_id, Spree::Zone.all.to_a.collect{|l|[l.name.humanize, l.id]}, {include_blank: true}, {class: 'select2', "data-placeholder" => 'Select Zone to apply'} %>
     <%= f.error_message_on :zone_id %>
   <% end %>
+
+  <div data-hook="rounding" class="form-group">
+    <%= f.check_box :rounding %>
+    <%= f.label :rounding, 'Round to whole number, i.e 30.33$ -> 30$' %>
+  </div>
   
 </div>
 
