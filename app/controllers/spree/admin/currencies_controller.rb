@@ -23,7 +23,7 @@ module Spree
       def apply
         @currency = Spree::Currency.find(params[:id])
         if @currency.exchange_rate.present?
-          ApplyExchangeRateToProductsJob.perform_async(@currency)
+          ApplyExchangeRateToProductsJob.perform_later(@currency)
           flash[:success] = "#{@currency.name}'s exchange rate is being applied. It might take a while."
         else
           flash[:error] = "#{@currency.name}'s exchange rate is not defined." 
