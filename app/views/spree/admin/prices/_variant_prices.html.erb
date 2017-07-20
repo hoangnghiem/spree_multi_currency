@@ -15,11 +15,14 @@
 	  <div class="panel-body no-padding-bottom">
 		  <% supported_currencies.each do |currency| %>
 		    <% code  = currency.iso_code %>
-		    <% price = variant.price_in(code) %>
+		    <% price = variant.orig_price_in(code) %>
 		    <div class="form-group">
-		      <%= label_tag "vp[#{variant.id}][#{code}]", code, class: 'control-label col-md-2' %>
+          <%= label_tag "vp[#{variant.id}][#{code}]", Spree::Config['currency'] == code ? "<span class='text-danger'>#{code}</span>".html_safe : code, class: 'control-label col-md-2' %>
 		      <div class="col-md-10">
 			      <%= text_field_tag "vp[#{variant.id}][#{code}]", (price && price.price ? price.display_amount.money : ''), class: 'form-control' %>
+            <% unless Spree::Config['currency'] == code %>
+              <p class="help-block"><small>Secondary currency product price doesn't include applicable local taxes</small></p>
+            <% end %>
 			     </div>
 		    </div>
 		  <% end %>
