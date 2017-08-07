@@ -3,9 +3,10 @@ class ApplyExchangeRateToProductsJob < ActiveJob::Base
 
   def perform(currency_id)
     puts "===================================================================="
-    puts "Start exchange all products for currency #{currency.name}"
     currency = Spree::Currency.find(currency_id)
     base_spree_currency = Spree::Currency.find_by_name(Spree::Config['currency'])
+
+    puts "Start exchange all products for currency #{currency.name}"
 
     if currency.exchange_rate.present?
       Spree::Product.includes(:variants_including_master).where(bespoke: false).find_each(batch_size: 100) do |product|
