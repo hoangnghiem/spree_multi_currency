@@ -30,9 +30,9 @@
         <td class="actions actions-2 text-right">
           <%= link_to_edit(currency, :no_text => true) if can? :edit, currency %>
           <%= link_to_delete(currency, :no_text => true) if (can? :delete, currency) && currency.name != Spree::Config['currency'] %>
-          <%= link_to spree.apply_admin_currency_path(currency), class: 'btn btn-success btn-sm icon-link with-tip action-edit no-text', method: :post, data: {'original-title' => 'Apply', :confirm => "Are you sure to apply exchange rate for this currency?"} do  %>
-            <span class="icon icon-refresh"></span>
-          <% end %>
+          <%#= link_to spree.apply_admin_currency_path(currency), class: 'btn btn-success btn-sm icon-link with-tip action-edit no-text', method: :post, data: {'original-title' => 'Apply', :confirm => "Are you sure to apply exchange rate for this currency?"} do  %>
+            <!-- <span class="icon icon&#45;refresh"></span> -->
+          <%# end %>
         </td>
       </tr>
     <% end %>
