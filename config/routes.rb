@@ -3,7 +3,9 @@ Spree::Core::Engine.add_routes do
 
   namespace :admin do
     resources :products do
-      resources :prices, only: [:index, :create]
+      resources :prices, only: [:index, :create] do
+        post :apply, on: :collection
+      end
     end
     resources :currencies do
       post :apply_all, on: :collection
