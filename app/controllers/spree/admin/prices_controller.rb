@@ -8,7 +8,7 @@ module Spree
           variant = Spree::Variant.find(variant_id)
           next unless variant
           supported_currencies.each do |currency|
-            price = variant.price_in(currency.iso_code)
+            price = variant.orig_price_in(currency.iso_code)
             price.price = (prices[currency.iso_code].blank? ? nil : prices[currency.iso_code].to_money)
             price.save! if price.new_record? && price.price || !price.new_record? && price.changed?
           end
@@ -22,19 +22,15 @@ module Spree
         base_spree_currency = Spree::Currency.find_by_name(Spree::Config['currency'])
 
         parent.variants_including_master.each do |variant|
-          base_price = variant.price_in(Spree::Config['currency'])
+          base_price = variant.orig_price_in(Spree::Config['currency'])
           if base_price.price
+            puts "base #{base_price.price}"
             exchange_currencies.each do |currency|
               exchanged_price = base_price.price * currency.exchange_rate * base_spree_currency.exchange_rate
-              if currency.rounding
-                exchanged_price = exchanged_price.to_i.to_f
-              end
-              exchanged_price_amount = Spree::Money.new(exchanged_price, currency: currency.name)
-              puts "exchanged_price_amount = #{exchanged_price_amount}"
+              exchanged_price = BigDecimal.new(exchanged_price.to_s).round(0, BigDecimal::ROUND_FLOOR)
 
-              price = variant.price_in(currency.name)
-              price.price = exchanged_price_amount.money
-              price.save!
+              price = variant.prices.find_or_initialize_by(currency: currency.name)
+              price.update_column(:amount, exchanged_price)
             end
           else
             puts "Product #{product.name} - Variant #{variant.options_text} does not have USD price."
