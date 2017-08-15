@@ -30,7 +30,8 @@ module Spree
               exchanged_price = BigDecimal.new(exchanged_price.to_s).round(0, BigDecimal::ROUND_FLOOR)
 
               price = variant.prices.find_or_initialize_by(currency: currency.name)
-              price.update_column(:amount, exchanged_price)
+              price.amount = exchanged_price
+              price.save!
             end
           else
             puts "Product #{product.name} - Variant #{variant.options_text} does not have USD price."
