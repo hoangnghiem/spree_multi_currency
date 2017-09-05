@@ -20,7 +20,9 @@
           <%= label_tag "vp[#{variant.id}][#{code}]", Spree::Config['currency'] == code ? "<span class='text-danger'>#{code}</span>".html_safe : code, class: 'control-label col-md-2' %>
 		      <div class="col-md-10">
 			      <%= text_field_tag "vp[#{variant.id}][#{code}]", (price && price.price ? price.display_amount.money : ''), class: 'form-control' %>
-            <% unless Spree::Config['currency'] == code %>
+            <% if Spree::Config['currency'] == code %>
+              <p class="help-block"><small>Primary currency product price. All secondary prices are calculated using the relevant currency value listed in configurations/currency and primary currency product price</small></p>
+            <% else %>
               <p class="help-block"><small>Secondary currency product price doesn't include applicable local taxes</small></p>
             <% end %>
 			     </div>
