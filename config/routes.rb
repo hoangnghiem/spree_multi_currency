@@ -9,7 +9,7 @@ Spree::Core::Engine.add_routes do
     end
     resources :currencies do
       post :apply_all, on: :collection
-      # post :apply, on: :member
+      post :apply, on: :member
     end
   end
 end
