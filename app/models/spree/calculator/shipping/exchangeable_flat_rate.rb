@@ -12,16 +12,20 @@ module Spree
         order_currency = package.currency
         spree_base_currency = Spree::Currency.find_by_name(preferred_base_currency)
         spree_target_currency = Spree::Currency.find_by_name(order_currency)
-        if spree_base_currency && spree_target_currency
-          if spree_target_currency.rounding
-            (self.preferred_amount * spree_base_currency.exchange_rate * spree_target_currency.exchange_rate).to_i.to_f
-          else
-            self.preferred_amount * spree_base_currency.exchange_rate * spree_target_currency.exchange_rate
-          end
+        amount = if spree_base_currency && spree_target_currency
+          self.preferred_amount * spree_base_currency.exchange_rate * spree_target_currency.exchange_rate
         else
           0
         end
+        return round_to_two_places(amount)
       end
+
+      private
+
+        def round_to_two_places(amount)
+          BigDecimal.new(amount.to_s).round(2, BigDecimal::ROUND_HALF_EVEN)
+        end
+      
     end
   end
 end
